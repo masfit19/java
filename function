@@ -1,0 +1,68 @@
+public static String getSHA256(String data){
+    StringBuffer sb = new StringBuffer();
+    try{
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(data.getBytes());
+        byte byteData[] = md.digest();
+
+        for (int i = 0; i < byteData.length; i++) {
+          sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+    } catch(Exception e){
+        e.printStackTrace();
+    }
+    return sb.toString();
+}
+
+public String sha1(String input)  {
+    MessageDigest mDigest = null;
+    try {
+      mDigest = MessageDigest.getInstance("SHA1");
+    } catch (NoSuchAlgorithmException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    byte[] result = mDigest.digest(input.getBytes());
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < result.length; i++) {
+        sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+    }
+
+    return sb.toString();
+}
+
+public static String convert_sha256(String base) {
+    try{
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(base.getBytes("UTF-8"));
+        StringBuffer hexString = new StringBuffer();
+
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+
+        return hexString.toString();
+    } catch(Exception ex){
+       throw new RuntimeException(ex);
+    }
+}
+
+public static String setLPZ(String string, int len) {
+    StringBuffer ret = new StringBuffer();
+    int kurang = len-string.length();
+    for (int i = 0; i < kurang; i++) {
+        ret.append("0");
+    }
+    ret.append(string);
+    return ret.toString();
+}
+public static String setRPZ(String string, int len){
+    StringBuffer ret = new StringBuffer(string);
+    int kurang = len-string.length();
+    for (int i = string.length(); i < len; i++) {
+        ret = ret.insert(i, "0");
+    }
+    return ret.toString();
+}
