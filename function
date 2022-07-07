@@ -66,3 +66,23 @@ public static String setRPZ(String string, int len){
     }
     return ret.toString();
 }
+
+private String getRespDesc(String rc){
+    HashMap<String, String> rc_desc = new HashMap<String, String>();
+    rc_desc.put("00", "EXT: Transaksi sukses (OK)");
+    rc_desc.put("60", "EXT: Deposit mitra tidak cukup");
+    rc_desc.put("70", "EXT: ID Pelanggan tidak dikenal");
+    String desc = "";
+    try {
+        desc = rc_desc.get(rc);
+    } catch (Exception e) {
+        // TODO: handle exception
+        desc = "EXT: UNKNOWN ERROR";
+    }
+
+    if(desc == null){
+        desc = "EXT: UNKNOWN ERROR";
+    }
+
+    return desc.toUpperCase();
+}
